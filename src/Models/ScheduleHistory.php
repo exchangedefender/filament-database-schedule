@@ -4,6 +4,7 @@ namespace HusamTariq\FilamentDatabaseSchedule\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Carbon;
 
 class ScheduleHistory extends Model
 {
@@ -25,6 +26,7 @@ class ScheduleHistory extends Model
     protected $casts = [
         'params' => 'array',
         'options' => 'array',
+        'completed_at' => 'datetime'
     ];
 
     /**
@@ -43,5 +45,12 @@ class ScheduleHistory extends Model
     public function command()
     {
         return $this->belongsTo(Schedule::class, 'schedule_id', 'id');
+    }
+
+    public function markCompleted(?Carbon $at = null)
+    {
+        $this->forceFill([
+            'completed_at' => $at ?? now(),
+        ])->save();
     }
 }

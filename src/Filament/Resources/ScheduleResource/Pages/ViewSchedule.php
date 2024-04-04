@@ -91,10 +91,10 @@ class ViewSchedule extends Page implements HasTable
                 Tables\Columns\TextColumn::make('created_at')
                     ->label(__('filament-database-schedule::schedule.fields.expression'))
                     ->dateTime(),
-                Tables\Columns\TextColumn::make('updated_at')
+                Tables\Columns\TextColumn::make('completed_at')
                     ->label(__('filament-database-schedule::schedule.fields.expression'))
                     ->formatStateUsing(function ($state, $record) {
-                        if($state == $record->created_at){
+                        if($record->completed_at === null){
                             return "Processing...";
                         }else{
                             return $state->diffInSeconds($record->created_at) . " seconds";

@@ -99,6 +99,7 @@ class Schedule
             $event->onSuccess(
                 function () use ($task, $event) {
                     $this->createLogFile($task, $event);
+                    $this->history->markCompleted();
                     if ($task->log_success) {
                         $this->updateHistoryEntry($this->history, $event);
                     }
