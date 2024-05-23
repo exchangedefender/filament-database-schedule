@@ -88,8 +88,8 @@ class ScheduleResource extends Resource
                         ->visible(fn ($get) => $get('command') === 'custom' && config('filament-database-schedule.commands.enable_custom')),
                     TableRepeater::make('params')->label(__('filament-database-schedule::schedule.fields.arguments'))
                         ->schema([
-                            Forms\Components\TextInput::make('value')->label(fn ($get) => ucfirst($get('name')))->required(fn ($get) => $get('required')),
                             Forms\Components\Hidden::make('name'),
+                            Forms\Components\TextInput::make('value')->label(fn (Forms\Get $get) => ucfirst($get('name')))->required(fn (Forms\Get $get) => $get('required')),
                         ])->addable(false)->withoutHeader()->deletable(false)->reorderable(false)
                         ->columnSpan('full')->visible(fn ($get) => !empty(static::$commands->firstWhere('name', $get('command'))['arguments'])),
                     TableRepeater::make('options_with_value')->label(__('filament-database-schedule::schedule.fields.options_with_value'))
